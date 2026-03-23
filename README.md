@@ -17,3 +17,27 @@
 git clone <repo-url>
 pip install numpy matplotlib
 python leapfrog.py
+
+## 실험 결과 및 분석
+
+- 실험 목적: dt 변화에 따른 궤도 안정성과 에너지 보존 확인
+- 실험 조건: vy = 1.0, dt = 0.01, 0.05, 0.1
+
+### 결과 요약
+- dt=0.01: 안정, 에너지 일정
+- dt=0.05: 에너지 약간 흔들림, 궤도 거의 겹침
+- dt=0.1: 에너지 오차 큼, 궤도 불안정
+
+### 궤도 그래프
+![Orbit dt=0.01](orbit_dt_0.01.png)
+![Orbit dt=0.05](orbit_dt_0.05.png)
+![Orbit dt=0.1](orbit_dt_0.1.png)
+
+### 에너지 그래프 (vy=1.0)
+![Energy dt=0.01](energy_dt_0.01.png)
+![Energy dt=0.05](energy_dt_0.05.png)
+![Energy dt=0.1](energy_dt_0.1.png)
+
+### 결론
+- Leapfrog 방법은 안정적이지만, dt가 커지면 정확도가 감소함
+- 짧은 시간 스케일에서는 궤도 변화는 크지 않음
