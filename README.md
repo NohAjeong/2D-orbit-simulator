@@ -47,11 +47,13 @@ python leapfrog.py
 ![Orbit dt=0.01](orbit_dt_0.01.png)
 ![Orbit dt=0.05](orbit_dt_0.05.png)
 ![Orbit dt=0.1](orbit_dt_0.1.png)
+![Orbit dt=0.05](orbit_dt_0.05.png)
 
 ### 에너지 그래프 (vy=1.0)
 ![Energy dt=0.01](energy_dt_0.01.png)
 ![Energy dt=0.05](energy_dt_0.05.png)
 ![Energy dt=0.1](energy_dt_0.1.png)
+![Energy dt=0.05](energy_dt_0.05.png)
 
 ### 결론
 - Leapfrog 방법은 안정적이며 에너지 보존이 뛰어나지만, dt가 커지면 정확도가 감소
