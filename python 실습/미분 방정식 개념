@@ -1,0 +1,31 @@
+import numpy as np
+
+#시간 간격
+dt = 1
+
+# 총 시간
+steps = 10
+
+#초기 위치
+x=0
+
+#초기 속도
+v=0
+
+#일정 가속도 (ex.로켓 추력)
+a=3
+positions =[]
+velocities =[]
+
+for i in range(steps):
+    #속도 업데이트 (가속도 -> 속도)
+    v = v + a * dt
+
+    #위치 업데이트 (속도 -> 위치)
+    x = x + v * dt
+
+    velocities.append(v)
+    positions.append(x)
+
+print("velocity:", velocities)
+print("position:", positions)

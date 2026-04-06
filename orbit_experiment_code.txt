@@ -1,0 +1,130 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+# --- 상수 정의 ---
+GM = 1.0
+steps = 10000
+
+# --- 시뮬레이션 함수 ---
+def simulate(dt, vy_init):
+    """
+    Leapfrog 적분으로 2D 궤적 시뮬레이션 수행
+
+    Parameters
+    ----------
+    dt : float
+        시간 간격
+    vy_init : float
+        초기 y 방향 속도
+
+    Returns
+    -------
+    x, y, vx, vy : ndarray
+        시간에 따른 위치와 속도 배열
+    """
+    x = np.zeros(steps)
+    y = np.zeros(steps)
+    vx = np.zeros(steps)
+    vy = np.zeros(steps)
+
+    # 초기 위치/속도
+    x[0], y[0] = 1.0, 0.0
+    vx[0], vy[0] = 0.0, vy_init
+
+    # Leapfrog integration
+    r = np.sqrt(x[0]**2 + y[0]**2)
+    for i in range(steps - 1):
+        ax = -GM * x[i] / r**3
+        ay = -GM * y[i] / r**3
+
+        vx_half = vx[i] + ax * dt / 2
+        vy_half = vy[i] + ay * dt / 2
+
+        x[i + 1] = x[i] + vx_half * dt
+        y[i + 1] = y[i] + vy_half * dt
+
+        r_new = np.sqrt(x[i + 1]**2 + y[i + 1]**2)
+        ax_new = -GM * x[i + 1] / r_new**3
+        ay_new = -GM * y[i + 1] / r_new**3
+
+        vx[i + 1] = vx_half + ax_new * dt / 2
+        vy[i + 1] = vy_half + ay_new * dt / 2
+
+        r = r_new
+
+    return x, y, vx, vy
+
+# --- 에너지 계산 함수 ---
+def compute_energy(x, y, vx, vy):
+    """
+    각 시간 스텝에서의 총 에너지 계산
+    E = 1/2 * v^2 - GM / r
+    """
+    r = np.sqrt(x**2 + y**2)
+    v2 = vx**2 + vy**2
+    return 0.5 * v2 - GM / r
+
+# --- 궤적 그리기 함수 ---
+def plot_orbit(x, y, color, label):
+    """
+    행성 궤적과 시작점 표시
+    """
+    plt.plot(x, y, color=color, label=label, linewidth=2)
+    plt.scatter(x[0], y[0], color=color, s=30)
+
+# --- 에너지 그래프 함수 ---
+def plot_energy(energy, title, filename):
+    """
+    에너지 변화 그래프를 그리고 저장
+    """
+    plt.figure()
+    plt.plot(energy)
+    plt.title(title)
+    plt.xlabel("Step")
+    plt.ylabel("Total Energy")
+    plt.grid(True)
+    plt.savefig(filename)
+    plt.show()
+
+# --- 메인 코드 ---
+velocities = [0.8, 1.0, 1.2, 1.5]
+dt = 0.05
+current_folder = os.path.dirname(os.path.abspath(__file__))
+colors = ["#1f77b4", "#2ca02c", "#ff7f0e", "#d62728"]
+
+plt.style.use("seaborn-v0_8")
+plt.figure(figsize=(8, 8))
+
+# 모든 vy 궤적 그리기
+for i, vy in enumerate(velocities):
+    x, y, vx, vy = simulate(dt, vy)
+    energy = compute_energy(x, y, vx, vy)
+    plot_orbit(x, y, color=colors[i], label=f"vy={vy}")
+
+# 중심 질량 표시
+plt.scatter(0, 0, color="black", s=80, label="Center")
+plt.title("Orbital Trajectories with Different Initial Velocities", fontsize=14)
+plt.xlabel("X Position")
+plt.ylabel("Y Position")
+plt.legend(frameon=True)
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.axis("equal")
+plt.tight_layout()
+plt.savefig(os.path.join(current_folder, f"orbit_dt_{dt}.png"))
+plt.show()
+
+# 모든 vy에 대한 에너지 그래프 저장
+for vy in velocities:
+    x, y, vx, vy = simulate(dt, vy)
+    energy = compute_energy(x, y, vx, vy)
+    filename = os.path.join(current_folder, f"energy_vy_{vy}_dt_{dt}.png")
+    plot_energy(energy, f"Total Energy over Time (vy={vy})", filename)
+
+
+simulate() → 시뮬레이션 전용
+compute_energy() → 에너지 계산 전용
+plot_orbit() → 궤적 + 시작점 표시
+plot_energy() → 에너지 그래프 그리기 + 저장
+모든 vy에 대해 반복 호출 → 파일 자동 저장
+docstring 포함 → 포트폴리오용 깔끔
