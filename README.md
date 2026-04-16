@@ -21,7 +21,7 @@
 ```bash
 git clone <repo-url>
 pip install numpy matplotlib
-python leapfrog.py
+python orbit_simulator.py
 ```
 ## 프로젝트 소개
 
