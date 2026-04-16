@@ -64,3 +64,8 @@ python orbit_simulator.py
 - Leapfrog 방법은 안정적이며 에너지 보존이 뛰어나지만, dt가 커지면 정확도가 감소
 - 속도가 기준 속도에서 벗어나면 궤도가 타원화 또는 탈출 궤도로 변함
 - 시뮬레이션과 그래프 시각화를 통해 물리적 직관과 수치 안정성을 동시에 확인 가능
+
+### Tech Stack
+- Python
+- NumPy: 물리 기반 수치 계산
+- Matplotlib: 궤도 시각화
