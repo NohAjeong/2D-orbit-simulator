@@ -68,61 +68,63 @@ def plot_energy(energy, label): # --- 에너지 그래프 함수 ---
     plt.plot(energy, label=label)
 
 # --- 메인 코드 ---
-velocities = [0.8, 1.0, 1.2, 1.5]
-dt = 0.05
-current_folder = os.path.dirname(os.path.abspath(__file__))
-colors = ["#1f77b4", "#2ca02c", "#ff7f0e", "#d62728"]
+if __name__ == "__main__":
+    velocities = [0.8, 1.0, 1.2, 1.5]
+    dt = 0.05
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    colors = ["#1f77b4", "#2ca02c", "#ff7f0e", "#d62728"]
 
-plt.style.use("seaborn-v0_8") # 그래프 전체의 기본 디자인 테마를 바꾸는 것
+    plt.style.use("seaborn-v0_8") # 그래프 전체의 기본 디자인 테마를 바꾸는 것
 
-# --- 시뮬레이션 실행 ---
-results = []
+    # --- 시뮬레이션 실행 ---
+    results = []
 
-for i, vy_init in enumerate(velocities):
-    result = simulate(dt, vy_init)
-    results.append(result)
+    for i, vy_init in enumerate(velocities):
+        result = simulate(dt, vy_init)
+        results.append(result)
 
-# =========================
-# 1️⃣ 전체 궤적
-# =========================
-plt.figure(figsize=(8, 8))
+    # =========================
+    # 1️⃣ 전체 궤적
+    # =========================
+    plt.figure(figsize=(8, 8))
 
-for i, vy_init in enumerate(velocities):
-    x, y, vx, vy = results[i]
-    plot_orbit(x, y, color=colors[i], label=f"vy={vy_init}")
+    for i, vy_init in enumerate(velocities):
+        x, y, vx, vy = results[i]
+        plot_orbit(x, y, color=colors[i], label=f"vy={vy_init}")
 
-# 중심 질량 (태양 느낌) / 그래프가 (0,0)을 중심 기준으로 인식
-plt.scatter(0,0, color="black", s=80, label="Center")
-plt.title("Orbital Trajectories with Different Initial Velocities", fontsize=14)
-plt.xlabel("X Position")
-plt.ylabel("Y Position")
-plt.legend(frameon=True)
-plt.grid(True, linestyle="--", alpha=0.5)
-plt.axis("equal")
-plt.tight_layout() # 여백 자동 조정 (불필요한 공간 제거)
-plt.savefig(os.path.join(current_folder, f"orbit_dt_{dt}.png"))
-plt.show()
+    # 중심 질량 (태양 느낌) / 그래프가 (0,0)을 중심 기준으로 인식
+    plt.scatter(0,0, color="black", s=80, label="Center")
+    plt.title("Orbital Trajectories with Different Initial Velocities", fontsize=14)
+    plt.xlabel("X Position")
+    plt.ylabel("Y Position")
+    plt.legend(frameon=True)
+    plt.grid(True, linestyle="--", alpha=0.5)
+    plt.axis("equal")
+    plt.tight_layout() # 여백 자동 조정 (불필요한 공간 제거)
+    plt.savefig(os.path.join(current_folder, f"orbit_dt_{dt}.png"))
+    plt.show()
 
-# =========================
-# 2️⃣ 에너지 그래프
-# =========================
-plt.figure(figsize=(8, 6)) # 👉 한 번만 생성
+    # =========================
+    # 2️⃣ 에너지 그래프
+    # =========================
+    plt.figure(figsize=(8, 6)) # 👉 한 번만 생성
 
-for i, vy_init in enumerate(velocities):
-    x, y, vx, vy = results[i]
-    energy = compute_energy(x, y, vx, vy)
-    plot_energy(energy, label=f"vy={vy_init}")
+    for i, vy_init in enumerate(velocities):
+        x, y, vx, vy = results[i]
+        energy = compute_energy(x, y, vx, vy)
+        plot_energy(energy, label=f"vy={vy_init}")
 
-plt.title("Total Energy over Time")
-plt.xlabel("Time Step")
-plt.ylabel("Energy")
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.savefig(os.path.join(current_folder, f"energy_dt_{dt}.png"))
-plt.show()
 
-# vy=0.8 타원 궤도 / 에너지 거의 일정 / 안정적
-# vy=1.0 원 궤도 / 일정 / 기준 속도 
-# vy=1.2 타원 궤도 / 에너지 약간 증가 / 더 길게 점프 
-# vy=1.5 탈출 궤도 / 에너지 증가 / 궤도 벗어남
+    plt.title("Total Energy over Time")
+    plt.xlabel("Time Step")
+    plt.ylabel("Energy")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(os.path.join(current_folder, f"energy_dt_{dt}.png"))
+    plt.show()
+
+    # vy=0.8 타원 궤도 / 에너지 거의 일정 / 안정적
+    # vy=1.0 원 궤도 / 일정 / 기준 속도 
+    # vy=1.2 타원 궤도 / 에너지 약간 증가 / 더 길게 점프 
+    # vy=1.5 탈출 궤도 / 에너지 증가 / 궤도 벗어남
