@@ -3,9 +3,8 @@ import matplotlib.pyplot as plt
 import os
 
 GM = 1.0
-steps = 10000
 
-def simulate(dt, vy_init): # --- 함수 정의: 시뮬레이션 ---
+def simulate(dt, vy_init, steps = 10000): # --- 함수 정의: 시뮬레이션 ---
     # dt = 시간 간격 , vy_init = 초기 y 방향 속도 , x,y,vx,vy = 시간에 따른 위치와 속도 배열
     # 위치, 속도, 에너지 배열 초기화 
     
