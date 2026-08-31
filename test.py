@@ -1,6 +1,10 @@
 import numpy as np
 from orbit_simulator import simulate, compute_energy
 
+def richardson(B, C):
+    T = (4*C - B) / 3
+    return T
+
 dt_values = [0.05, 0.10, 0.15, 0.20]
 test_vy = 1.5
 energy_ranges = []
@@ -62,3 +66,15 @@ velocity_difference_0025 = np.sqrt((velocity_reference[0] - vx_0025[-1])**2 + (v
 print("velocity_difference_0025 =", velocity_difference_0025)
 velocity_difference_000625 = np.sqrt((vx_000625[-1] - velocity_reference[0])**2 + (vy_000625[-1] - velocity_reference[1])**2)
 print("velocity_difference_000625 =", velocity_difference_000625)
+
+
+Tx = richardson(position_reference[0], x_000625[-1])
+Ty = richardson(position_reference[1], y_000625[-1])
+T_pos = (Tx, Ty)
+
+Tvx = richardson(velocity_reference[0], vx_000625[-1])
+Tvy = richardson(velocity_reference[1], vy_000625[-1])
+T_vel = (Tvx, Tvy)
+
+print("Richardson 위치:", T_pos)
+print("Richardson 속도:", T_vel)
