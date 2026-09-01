@@ -5,6 +5,14 @@ def richardson(B, C):
     T = (4*C - B) / 3
     return T
 
+def compute_position_difference(reference, x_arr, y_arr):
+    diff = np.sqrt((reference[0] - x_arr[-1])**2 + (reference[1] - y_arr[-1])**2)
+    return diff
+
+def compute_velocity_difference(reference_velo, vx_arr, vy_arr):
+    diff = np.sqrt((reference_velo[0] - vx_arr[-1])**2 + (reference_velo[1] - vy_arr[-1])**2)
+    return diff
+
 dt_values = [0.05, 0.10, 0.15, 0.20]
 test_vy = 1.5
 energy_ranges = []
@@ -34,7 +42,7 @@ for front_change, back_change in zip(changes[:-1], changes[1:]):
     assert front_change < back_change
 print("테스트 통과")
 
-x_005, y_005, vx_005, vy_005 = simulate(0.005, 1.5, 4001)
+
 x_05, y_05, vx_05, vy_05 = simulate(0.05, 1.5, 401)
 x_025, y_025, vx_025, vy_025 = simulate(0.025, 1.5, 801)
 x_01, y_01, vx_01, vy_01 = simulate(0.01, 1.5, 2001)
@@ -78,3 +86,23 @@ T_vel = (Tvx, Tvy)
 
 print("Richardson 위치:", T_pos)
 print("Richardson 속도:", T_vel)
+
+position_difference_05_v2 = compute_position_difference(T_pos, x_05, y_05)
+position_difference_025_v2 = compute_position_difference(T_pos, x_025, y_025)
+position_difference_01_v2 = compute_position_difference(T_pos, x_01, y_01)
+position_difference_0025_v2 = compute_position_difference(T_pos, x_0025, y_0025)
+
+print("position_difference_05_v2:", position_difference_05_v2)
+print("position_difference_025_v2: ", position_difference_025_v2)
+print("position_difference_01_v2: ", position_difference_01_v2)
+print("position_difference_0025_v2: ", position_difference_0025_v2)
+
+velocity_difference_05_v2 = compute_velocity_difference(T_vel, vx_05, vy_05)
+velocity_difference_025_v2 = compute_velocity_difference(T_vel, vx_025, vy_025)
+velocity_difference_01_v2 = compute_velocity_difference(T_vel, vx_01, vy_01)
+velocity_difference_0025_v2 = compute_velocity_difference(T_vel, vx_0025, vy_0025)
+
+print("velocity_difference_05_v2: ", velocity_difference_05_v2)
+print("velocity_difference_025_v2: ", velocity_difference_025_v2)
+print("velocity_difference_01_v2: ", velocity_difference_01_v2)
+print("velocity_difference_0025_v2: ", velocity_difference_0025_v2)
