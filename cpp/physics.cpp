@@ -18,9 +18,22 @@ int main(){
     const double GM = 1.0;
     double ax;
     double ay;
+    const double dt = 0.05;
+
 
     computeAcceleration(x, y, GM, ax, ay);
-    std::cout << "ax=" << ax << std::endl;
-    std::cout << "ay=" << ay << std::endl;
+    double vx_half = vx + ax * (dt/2.0);
+    double vy_half = vy + ay * (dt/2.0);
+    x = x + vx_half * dt;
+    y = y + vy_half * dt;   
+
+    double ax_new;
+    double ay_new;
+    computeAcceleration(x, y, GM, ax_new, ay_new);
+    vx = vx_half + ax_new * (dt/2.0);
+    vy = vy_half + ay_new * (dt/2.0);
+
+    std::cout << "x=" << x << ", y=" << y << std::endl;
+    std::cout << "vx=" << vx << ", vy=" << vy << std::endl;
     return 0;
 }

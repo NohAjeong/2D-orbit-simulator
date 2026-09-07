@@ -69,7 +69,7 @@ def plot_energy(energy, label): # --- 에너지 그래프 함수 ---
 # --- 메인 코드 ---
 if __name__ == "__main__":
     velocities = [0.8, 1.0, 1.2, 1.5]
-    dt = 0.05
+    dt = 0.01
     current_folder = os.path.dirname(os.path.abspath(__file__))
     colors = ["#1f77b4", "#2ca02c", "#ff7f0e", "#d62728"]
 
